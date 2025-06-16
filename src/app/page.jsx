@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
+import Analysis from './dashboard/analysis/page';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
       <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full">
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -22,7 +23,11 @@ export default function LoginPage() {
           </div>
         </div>
 
+<<<<<<< HEAD
         <h2 className="text-gray-700 text-2xl font-bold text-center mb-2">Login to Pos</h2>
+=======
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-700">Login to Pos</h2>
+>>>>>>> 1c861dca3b2fc2dde3faa63409afc1a50d87cfb1
         <p className="text-center text-sm text-gray-500 mb-6">
           Welcome back! Please enter your credentials.
         </p>
@@ -67,6 +72,8 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+
+      <Analysis />
     </div>
   );
 }
