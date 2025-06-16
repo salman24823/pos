@@ -35,7 +35,7 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-center mb-2">Create Your Account</h2>
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-700">Create Your Account</h2>
         <p className="text-center text-sm text-gray-500 mb-6">
           Sign up to access the Pos platform
         </p>
@@ -46,7 +46,7 @@ export default function RegisterPage() {
             <input
               name="name"
               type="text"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
@@ -59,7 +59,7 @@ export default function RegisterPage() {
             <input
               name="email"
               type="email"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
@@ -72,7 +72,7 @@ export default function RegisterPage() {
             <input
               name="password"
               type="password"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
@@ -85,7 +85,7 @@ export default function RegisterPage() {
             <input
               name="confirmPassword"
               type="password"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
