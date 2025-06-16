@@ -1,4 +1,5 @@
 "use client"; // <== Required for client-side interactivity
+import Link from 'next/link';
 
 import { motion } from "framer-motion";
 
@@ -74,9 +75,16 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <p className="text-sm text-center mt-6 text-gray-500">
+          {/* <p className="text-sm text-center mt-6 text-gray-500">
             Don’t have an account? <a href="#" className="text-blue-600 font-medium hover:underline">Register now</a>
-          </p>
+          </p> */}
+          <p className="text-sm mt-6 text-center text-gray-500">
+  Don’t have an account?{" "}
+  <Link href="/register" className="text-blue-600 hover:underline font-semibold">
+    Register now
+  </Link>
+</p>
+
 
           <p className="text-xs text-center mt-6 text-gray-400">
             © 2025 Sellora Enterprises LTD. <a href="#" className="underline">Privacy Policy</a>
