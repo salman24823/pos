@@ -1,6 +1,7 @@
 // pages/register.jsx
 "use client";
 import { motion } from "framer-motion";
+import Link from 'next/link';
 
 export default function RegisterPage() {
   return (
@@ -102,7 +103,7 @@ export default function RegisterPage() {
               Track team performance, monitor sales, and manage operations from a single dashboard.
             </p>
             <img
-              src="/dashboard-sample.png"
+              src="https://hlpos.com/wp-content/uploads/2020/07/dashboard.png"
               alt="Dashboard Preview"
               className="rounded-2xl shadow-lg border border-white/10"
             />
