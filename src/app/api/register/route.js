@@ -13,12 +13,15 @@ const userSchema = new mongoose.Schema(
 );
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
+console.log("📩 Received a POST request to /api/register");
+
 // POST endpoint for registration
 export async function POST(req) {
   await dbConnection();
 
   try {
-    const { name, email, password } = await req.json();
+    const body = await req.json();
+    const { name, email, password } = body;
 
     // Simple validation
     if (!name || !email || !password) {
@@ -39,7 +42,7 @@ export async function POST(req) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error registering user:", error);
+    console.error("❌ Error registering user:", error.message);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

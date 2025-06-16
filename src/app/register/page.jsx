@@ -10,6 +10,10 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleRegister = async (e) => {
   e.preventDefault();
   if (formData.password !== formData.confirmPassword) {
@@ -18,7 +22,7 @@ export default function RegisterPage() {
   }
 
   try {
-    const res = await fetch("/api/register", {
+    const res = await fetch("http://localhost:3002/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -28,7 +32,7 @@ export default function RegisterPage() {
       }),
     });
 
-    const result = await res.json();
+    let result = await res.json();
 
     if (res.ok) {
       alert("🎉 Registered successfully!");

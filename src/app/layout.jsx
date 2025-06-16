@@ -25,9 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <HeroUIProvider>
-          <Header />
           {children}
-          <Footer />
         </HeroUIProvider>
       </body>
     </html>
