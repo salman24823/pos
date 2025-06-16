@@ -10,20 +10,38 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleRegister = async (e) => {
+  e.preventDefault();
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    // Basic password match check
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+  try {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      alert("🎉 Registered successfully!");
+      // You can navigate to login or clear form:
+      setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+    } else {
+      alert(`❌ ${result.message}`);
     }
-    console.log('Registering:', formData);
-    // Here you would send data to backend API
-  };
+  } catch (error) {
+    console.error("Registration failed:", error);
+    alert("Something went wrong.");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
