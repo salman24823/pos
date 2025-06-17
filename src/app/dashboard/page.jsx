@@ -42,7 +42,8 @@ export default function Dashboard() {
         <div className="text-2xl font-bold mb-6">panze <span className="text-sm">studio</span></div>
         <nav className="space-y-2 text-sm">
           {[
-            'Dashboard', 'Parties', 'Product Manager', 'Sales', 'Purchases',
+        
+            'Dashboard', 'Attendence', 'Product Manager', 'Sales', 'Purchases',
             'Stock Transfer', 'POS', 'Cash & Bank', 'Expenses', 'Staff Members',
             'Sales Reports', 'Online Orders', 'Settings', 'Subscription', 'Logout',
           ].map((item, idx) => (

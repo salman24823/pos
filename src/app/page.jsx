@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Analysis from './dashboard/analysis/page';
+import Attendance from './dashboard/attendance/page';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -68,7 +69,7 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
-
+<Attendance />
       <Analysis />
     </div>
   );
