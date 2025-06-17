@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import dbConnection from "@/app/config/db";
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt';
+
 
 // Create a schema/model
 const userSchema = new mongoose.Schema(
@@ -13,11 +15,18 @@ const userSchema = new mongoose.Schema(
 );
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-console.log("📩 Received a POST request to /api/register");
 
 // POST endpoint for registration
 export async function POST(req) {
-  await dbConnection();
+
+  console.log("📩 Received a POST request to /api/register");
+
+  try {
+    await dbConnection();
+  } catch (err) {
+    console.error("❌ DB connection error:", err.message);
+    return NextResponse.json({ message: "Database connection failed" }, { status: 500 });
+  }
 
   try {
     const body = await req.json();
@@ -34,8 +43,11 @@ export async function POST(req) {
       return NextResponse.json({ message: "User already exists" }, { status: 409 });
     }
 
+    // ✅ Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Save user
-    const newUser = await User.create({ name, email, password });
+    const newUser = await User.create({ name, email, password: hashedPassword });
 
     return NextResponse.json(
       { message: "User registered successfully", user: newUser },
