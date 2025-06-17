@@ -1,13 +1,14 @@
-'use client';
-import Link from 'next/link';
-import { useState } from 'react';
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -15,37 +16,38 @@ export default function RegisterPage() {
   };
 
   const handleRegister = async (e) => {
-  e.preventDefault();
-  if (formData.password !== formData.confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:3002/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      }),
-    });
-
-    let result = await res.json();
-
-    if (res.ok) {
-      alert("🎉 Registered successfully!");
-      // You can navigate to login or clear form:
-      setFormData({ name: '', email: '', password: '', confirmPassword: '' });
-    } else {
-      alert(`❌ ${result.message}`);
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
-  } catch (error) {
-    console.error("Registration failed:", error);
-    alert("Something went wrong.");
-  }
-};
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      let result = await res.json();
+
+      if (res.ok) {
+        toast.success("Registered successfully!");
+
+        // You can navigate to login or clear form:
+        setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+      } else {
+        toast.error("Something went Wrong");
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      toast.error("Something went Wrong");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
@@ -57,14 +59,18 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-center mb-2 text-gray-700">Create Your Account</h2>
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-700">
+          Create Your Account
+        </h2>
         <p className="text-center text-sm text-gray-500 mb-6">
           Sign up to access the Pos platform
         </p>
 
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Full Name</label>
+            <label className="block mb-1 font-medium text-gray-700">
+              Full Name
+            </label>
             <input
               name="name"
               type="text"
@@ -77,7 +83,9 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Email</label>
+            <label className="block mb-1 font-medium text-gray-700">
+              Email
+            </label>
             <input
               name="email"
               type="email"
@@ -90,7 +98,9 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Password</label>
+            <label className="block mb-1 font-medium text-gray-700">
+              Password
+            </label>
             <input
               name="password"
               type="password"
@@ -103,7 +113,9 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Confirm Password</label>
+            <label className="block mb-1 font-medium text-gray-700">
+              Confirm Password
+            </label>
             <input
               name="confirmPassword"
               type="password"
@@ -124,8 +136,11 @@ export default function RegisterPage() {
         </form>
 
         <p className="text-sm mt-6 text-center text-gray-500">
-          Already have an account?{' '}
-          <Link href="/" className="text-indigo-600 hover:underline font-semibold">
+          Already have an account?{" "}
+          <Link
+            href="/"
+            className="text-indigo-600 hover:underline font-semibold"
+          >
             Login
           </Link>
         </p>
