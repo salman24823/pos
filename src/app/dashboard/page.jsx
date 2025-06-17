@@ -1,4 +1,6 @@
-'use client'
+'use client';
+
+import Link from 'next/link';
 
 export default function Dashboard() {
   const summaryCards = [
@@ -35,12 +37,19 @@ export default function Dashboard() {
     { product: 'Google Pixel', qty: 8 },
   ];
 
+  const navItems = [
+    'Dashboard ', 'Active Employees', 'x Employees', 'Parties', 'Product Manager', 'Purchases',
+    'Stock Transfer', 'POS', 'Cash & Bank', 'Expenses', 'Staff Members',
+    'Sales Reports', 'Online Orders', 'Settings', 'Subscription', 'Logout',
+  ];
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-64 bg-[#0E0E18] text-white p-4 space-y-4">
         <div className="text-2xl font-bold mb-6">panze <span className="text-sm">studio</span></div>
         <nav className="space-y-2 text-sm">
+<<<<<<< HEAD
           {[
         
             'Dashboard', 'Attendence', 'Product Manager', 'Sales', 'Purchases',
@@ -48,12 +57,23 @@ export default function Dashboard() {
             'Sales Reports', 'Online Orders', 'Settings', 'Subscription', 'Logout',
           ].map((item, idx) => (
             <div
+=======
+          {navItems.map((item, idx) => (
+            <Link
+>>>>>>> da83004dfafcea1534855f8e3e805d3c5bd1e00f
               key={idx}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-800 ${item === 'Dashboard' ? 'bg-gray-700' : ''}`}
+              href={
+                item === 'Dashboard' ? '/dashboard' :
+                item === 'Employees' ? '/employees' :
+                item === 'Active Employees' ? '/employees/active' : '#'
+              }
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-800 ${
+                item === 'Dashboard' ? 'bg-gray-700' : ''
+              }`}
             >
               <span className="text-lg">🔹</span>
               <span>{item}</span>
-            </div>
+            </Link>
           ))}
         </nav>
       </aside>
@@ -151,5 +171,9 @@ export default function Dashboard() {
       </main>
     </div>
   );
+<<<<<<< HEAD
   
 }
+=======
+}
+>>>>>>> da83004dfafcea1534855f8e3e805d3c5bd1e00f
