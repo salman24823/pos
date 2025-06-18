@@ -1,8 +1,5 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
 import { HeroUIProvider } from "@heroui/react";
 import { ToastContainer } from "react-toastify";
 
@@ -28,14 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* < Header/> */}
-        
-        {children}
-{/* <Footer/> */}
-
-    <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ToastContainer />
+        <ToastContainer position="top-center" />
         <HeroUIProvider>
           {children}
         </HeroUIProvider>

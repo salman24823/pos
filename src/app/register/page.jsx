@@ -1,31 +1,67 @@
-"use client";
-import Link from "next/link";
-import { useState } from "react";
-import { toast } from "react-toastify";
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
 
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -33,117 +69,225 @@ export default function RegisterPage() {
         }),
       });
 
-      let result = await res.json();
+      const result = await res.json();
 
-      if (res.ok) {
-        toast.success("Registered successfully!");
-
-        // You can navigate to login or clear form:
-        setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-      } else {
-        toast.error("Something went Wrong");
+      if (!res.ok) {
+        return toast.error(result.message || 'Registration failed');
       }
+      toast.success('Registration successful! Redirecting to login...');
+
+      setTimeout(() => {
+        window.location.replace('/');
+      }, 2000)
+
     } catch (error) {
-      console.error("Registration failed:", error);
-      toast.error("Something went Wrong");
+      console.error('Registration failed:', error);
+      toast.error('An error occurred during registration');
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const getPasswordStrength = () => {
+    if (!formData.password) return 0;
+    let strength = 0;
+
+    // Length check
+    if (formData.password.length >= 6) strength += 1;
+    if (formData.password.length >= 8) strength += 1;
+
+    // Character diversity
+    if (/[A-Z]/.test(formData.password)) strength += 1;
+    if (/[0-9]/.test(formData.password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(formData.password)) strength += 1;
+
+    return Math.min(strength, 5);
+  };
+
+  const passwordStrength = getPasswordStrength();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-50 px-4 py-8">
+      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full transition-all duration-300 hover:shadow-2xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-indigo-600 text-white text-xl font-bold rounded-full flex items-center justify-center shadow-lg">
-            S
+          <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-2xl font-bold rounded-full flex items-center justify-center shadow-md">
+            POS
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-center mb-2 text-gray-700">
-          Create Your Account
-        </h2>
-        <p className="text-center text-sm text-gray-500 mb-6">
-          Sign up to access the Pos platform
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-gray-800">Create Your Account</h2>
+        <p className="text-center text-sm sm:text-base text-gray-500 mb-6">
+          Join us to access all features
         </p>
 
-        <form onSubmit={handleRegister} className="space-y-5">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label className="block mb-1 font-medium text-gray-700">
-              Full Name
-            </label>
-            <input
-              name="name"
-              type="text"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              required
-            />
+            <label className="block mb-2 font-medium text-gray-700">Full Name</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiUser className="text-gray-400" />
+              </div>
+              <input
+                name="name"
+                type="text"
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.name ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                  }`}
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Doe"
+              />
+            </div>
+            {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              name="email"
-              type="email"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              required
-            />
+            <label className="block mb-2 font-medium text-gray-700">Email</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiMail className="text-gray-400" />
+              </div>
+              <input
+                name="email"
+                type="email"
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.email ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                  }`}
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+              />
+            </div>
+            {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+            <label className="block mb-2 font-medium text-gray-700">Password</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiLock className="text-gray-400" />
+              </div>
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.password ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                  }`}
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FiEyeOff className="text-gray-400 hover:text-gray-600" />
+                ) : (
+                  <FiEye className="text-gray-400 hover:text-gray-600" />
+                )}
+              </button>
+            </div>
+            {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
+
+            {/* Password strength indicator */}
+            {formData.password && (
+              <div className="mt-2">
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div
+                      key={i}
+                      className={`h-1 flex-1 rounded-full ${i <= passwordStrength
+                        ? i <= 2
+                          ? 'bg-red-400'
+                          : i <= 4
+                            ? 'bg-yellow-400'
+                            : 'bg-green-500'
+                        : 'bg-gray-200'
+                        }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs mt-1 text-gray-500">
+                  {passwordStrength <= 2
+                    ? 'Weak'
+                    : passwordStrength <= 4
+                      ? 'Moderate'
+                      : 'Strong'}
+                </p>
+              </div>
+            )}
           </div>
 
           <div>
-            <label className="block mb-1 font-medium text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              name="confirmPassword"
-              type="password"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 focus:ring-indigo-400"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+            <label className="block mb-2 font-medium text-gray-700">Confirm Password</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiLock className="text-gray-400" />
+              </div>
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.confirmPassword ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                  }`}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <FiEyeOff className="text-gray-400 hover:text-gray-600" />
+                ) : (
+                  <FiEye className="text-gray-400 hover:text-gray-600" />
+                )}
+              </button>
+            </div>
+            {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300"
+            disabled={isLoading}
+            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${isLoading
+              ? 'bg-indigo-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 shadow-md hover:shadow-lg'
+              }`}
           >
-            Register
+            {isLoading ? (
+              <>
+                <FiLoader className="animate-spin mr-2" />
+                Registering...
+              </>
+            ) : (
+              'Register'
+            )}
           </button>
         </form>
 
-        <p className="text-sm mt-6 text-center text-gray-500">
-          Already have an account?{" "}
-          <Link
-            href="/"
-            className="text-indigo-600 hover:underline font-semibold"
-          >
-            Login
-          </Link>
-        </p>
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Already have an account?
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <Link
+              href="/"
+              className="block w-full text-center py-2 px-4 border border-gray-200 rounded-lg font-medium text-indigo-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+            >
+              Sign in instead
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

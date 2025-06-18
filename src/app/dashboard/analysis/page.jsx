@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const Analysis = () => {
+const Analysis = () => {
   return (
     <div>Analysis</div>
   )
 }
+
+export default Analysis
