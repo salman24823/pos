@@ -1,5 +1,4 @@
-'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   FiHome, FiUsers, FiPackage, FiShoppingCart, FiTruck,
@@ -25,12 +24,20 @@ export default function Sidebar() {
   return (
     <aside className="max-lg:hidden relative w-64 bg-gray-900 text-white py-4 space-y-2">
       <div className='sticky top-4'>
-        <div className="text-2xl font-bold mb-6 p-4 flex items-center">
-          <div className="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center mr-2">
-            <span className="font-bold">P</span>
+
+        {/* ✅ Logo Display */}
+        <div className="flex flex-col items-center mb-6">
+          <Image
+            src="/logo1.png"
+            alt="Panze Logo"
+            width={80}
+            height={80}
+            className="rounded-xl"
+          />
+          <div className="text-2xl font-bold mt-2">
+            <span>EAST IS WEST </span>
+            <span className="text-gray-400 ml-1 text-sm"></span>
           </div>
-          <span>Panze</span>
-          <span className="text-gray-400 ml-1 text-sm">Studio</span>
         </div>
 
         <nav className="space-y-1">
