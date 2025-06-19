@@ -1,47 +1,49 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function EmployeesPage() {
-  const [employees] = useState([
-    { id: 'E001', name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890', department: 'Engineering' },
-    { id: 'E002', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '098-765-4321', department: 'Marketing' },
-    { id: 'E003', name: 'Alice Johnson', email: 'alice.johnson@example.com', phone: '555-123-4567', department: 'HR' },
-    { id: 'E004', name: 'Bob Wilson', email: 'bob.wilson@example.com', phone: '777-888-9999', department: 'Finance' },
-    { id: 'E005', name: 'Emma Brown', email: 'emma.brown@example.com', phone: '222-333-4444', department: 'Sales' },
-  ]);
+  const [employees, setEmployees] = useState([]);
+  const [ loading, setLoading ] = useState(true);
 
-  const navItems = [
-    'Dashboard', 'Parties', 'Product Manager', 'Employees', 'Purchases',
-    'Stock Transfer', 'POS', 'Cash & Bank', 'Expenses', 'Staff Members',
-    'Sales Reports', 'Online Orders', 'Settings', 'Subscription', 'Logout',
+  const dummyData = [
+    { id:'E401' , name: "Abdul-Hamad", gmail: "abdulhamad444@gmail.com", contact: "03900578970" },
+    { id:'E402' , name: "Abdul-Hammad", gmail: "abdulhamad445@gmail.com", contact: "03800594870" },
+    { id:'E403' , name: "Abdul-Hamid", gmail: "abdulhamad446@gmail.com", contact: "03500674870" }
   ];
+  
+  useEffect( ()=> {
+    async function fetchEmployees() {
+      try{
+      const res = await fetch('/api/employees');
+      const data = await res.json();
+
+      const combined = [
+        ...dummyData,
+        ...dbData.map((item) => ({
+          _id: item._id,
+          fullname: item.fullname || item.name, // fallback if "fullname" missing
+          email: item.email,
+          phone: item.phone,
+        })),
+      ];
+
+      setEmployees(combined);
+      }catch(error){
+        console.error("Failed to fetch employees:", error);
+        setEmployees(dummyData);
+    }finally{
+      setLoading(false);
+    }
+  }
+    fetchEmployees();
+
+  }, [] );
+
+  if (loading) return <div className='p-6'>Loading...</div>
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#0E0E18] text-white p-4 space-y-4">
-        <div className="text-2xl font-bold mb-6">
-          panze <span className="text-sm">studio</span>
-        </div>
-        <nav className="space-y-2 text-sm">
-          {navItems.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item === 'Dashboard' ? '/dashboard' : item === 'Employees' ? '/employees' : '#'}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-800 ${
-                item === 'Employees' ? 'bg-gray-700' : ''
-              }`}
-            >
-              <span className="text-lg">🔹</span>
-              <span>{item}</span>
-            </Link>
-          ))}
-        </nav>
-      </aside>
-
-      {/* Main Content */}
       <main className="flex-1 p-6 space-y-6 bg-gray-100">
         <h1 className="text-3xl font-bold mb-6">Employees</h1>
         <div className="bg-white p-6 rounded-xl shadow">
@@ -50,24 +52,34 @@ export default function EmployeesPage() {
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="text-left border-b text-gray-500">
-                  <th className="px-6 py-3">ID</th>
                   <th className="px-6 py-3">Name</th>
                   <th className="px-6 py-3">Email</th>
+                  <th className="px-6 py-3">Phone</th>
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee) => (
+                {employees.map((employee, index) => (
                   <tr
-                    key={employee.id}
+                    key={employee._id || employee.id || index }
                     className="border-b hover:bg-gray-50"
                   >
-                    <td className="px-6 py-4">{employee.id}</td>
+                    <td className="px-6 py-4">{employee.fullname || employee.name}</td>
                     <td className="px-6 py-4">
-                      <Link href={`/employees/${employee.id}`} className="text-blue-500 hover:underline">
-                        {employee.name}
+                      {employee._id ? (
+                      <Link href={`/employees/${employee._id}`} className="text-blue-500 hover:underline">
+                        {employee.email}
                       </Link>
+                      ) : (
+                        <span>{employee.gmail}</span>
+                      )}
                     </td>
-                    <td className="px-6 py-4">{employee.email}</td>
+                    <td className="px-6 py-4">{employee.phone || employee.contact}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        className="bg-red-600 text-white p-2 px-4 shadow-lg rounded-md hover:bg-red-500 transition">
+                        Terminate 
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -75,6 +87,5 @@ export default function EmployeesPage() {
           </div>
         </div>
       </main>
-    </div>
   );
 }

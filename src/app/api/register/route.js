@@ -1,19 +1,8 @@
 import { NextResponse } from "next/server";
 import dbConnection from "@/config/db";
 import mongoose from "mongoose";
+import User from "@/models/userModel";
 import bcrypt from 'bcrypt';
-
-
-// Create a schema/model
-const userSchema = new mongoose.Schema(
-  {
-    name: String,
-    email: { type: String, unique: true },
-    password: String,
-  },
-  { timestamps: true }
-);
-const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 
 // POST endpoint for registration
@@ -30,10 +19,10 @@ export async function POST(req) {
 
   try {
     const body = await req.json();
-    const { name, email, password } = body;
+    const { fullname, email, password } = body;
 
     // Simple validation
-    if (!name || !email || !password) {
+    if (!fullname || !email || !password) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
@@ -47,7 +36,7 @@ export async function POST(req) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Save user
-    const newUser = await User.create({ name, email, password: hashedPassword });
+    const newUser = await User.create({ fullname, email, password: hashedPassword });
 
     return NextResponse.json(
       { message: "User registered successfully", user: newUser },
@@ -56,5 +45,15 @@ export async function POST(req) {
   } catch (error) {
     console.error("❌ Error registering user:", error.message);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    await dbConnection();
+    const employees = await User.find();
+    return NextResponse.json(employees);
+  } catch (error) {
+    return NextResponse.json({ message: "Failed to fetch employees" }, { status: 500 });
   }
 }

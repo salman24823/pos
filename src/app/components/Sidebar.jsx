@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -15,7 +16,7 @@ export default function Sidebar() {
     { name: 'Sales', icon: FiShoppingCart, path: '/dashboard/sales' },
     { name: 'Purchases', icon: FiShoppingBag, path: '/dashboard/purchases' },
     { name: 'Expenses', icon: FiPieChart, path: '/dashboard/expenses' },
-    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/staff' },
+    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/employee' },
     { name: 'Sales Reports', icon: FiBarChart2, path: '/dashboard/reports' },
     { name: 'Settings', icon: FiSettings, path: '/dashboard/settings' },
     { name: 'Logout', icon: FiLogOut, path: '/logout' },
@@ -40,6 +41,7 @@ export default function Sidebar() {
           </div>
         </div>
 
+        {/* NAVIGATION */}
         <nav className="space-y-1">
           {navItems.map((item, idx) => (
             <Link
