@@ -73,7 +73,6 @@ export default function ProfilePage() {
     className="w-full p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
   />
 
-
   <div className="flex justify-between items-center mt-4">
   <form action="#" className="w-full space-y-4">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -125,11 +124,9 @@ export default function ProfilePage() {
   </form>
 </div>
 
-
 </div>
 
       </div>
-
       <div className="mt-6 px-6">
         <div className="bg-white rounded-xl p-6 shadow w-full md:w-1/2">
           <h2 className="text-lg font-semibold mb-2 text-black">About</h2>
