@@ -79,7 +79,7 @@ export default function Sidebar() {
     { name: 'Sales', icon: FiShoppingCart, path: '/dashboard/sales' },
     { name: 'Purchases', icon: FiShoppingBag, path: '/dashboard/purchases' },
     { name: 'Expenses', icon: FiPieChart, path: '/dashboard/expenses' },
-    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/staff' },
+    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/employee' },
     { name: 'Sales Reports', icon: FiBarChart2, path: '/dashboard/reports' },
     { name: 'Settings', icon: FiSettings, path: '/dashboard/settings' },
     { name: 'Logout', icon: FiLogOut, path: '/logout' },

@@ -3,13 +3,29 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { NextResponse } from "next/server";
+import dbConnection from "@/app/config/db";
+import User from '@/models/userModel';
+
+export async function GET(req, { params }) {
+  try {
+    await dbConnection();
+    const employee = await User.findById(params.id);
+    if (!employee) {
+      return NextResponse.json({ message: "Employee not found" }, { status: 404 });
+    }
+    return NextResponse.json(employee);
+  } catch (error) {
+    return NextResponse.json({ message: "Error fetching employee" }, { status: 500 });
+  }
+}
 
 export default function EmployeeDetailsPage() {
   const [employee, setEmployee] = useState(null);
   const [error, setError] = useState('');
   const { id } = useParams();
   const router = useRouter();
-
+  
   useEffect(() => {
     async function fetchEmployee() {
       try {
@@ -18,7 +34,7 @@ export default function EmployeeDetailsPage() {
         if (response.ok) {
           setEmployee(data);
         } else {
-          setError(data.error);
+          setError(data.message || 'Failed to fetch');
         }
       } catch (err) {
         setError('Failed to fetch employee details');
@@ -32,7 +48,9 @@ export default function EmployeeDetailsPage() {
     'Stock Transfer', 'POS', 'Cash & Bank', 'Expenses', 'Staff Members',
     'Sales Reports', 'Online Orders', 'Settings', 'Subscription', 'Logout',
   ];
-
+  
+  
+  
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
