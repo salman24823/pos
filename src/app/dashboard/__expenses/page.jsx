@@ -73,7 +73,7 @@ export default function ExpensePage() {
   };
 
   useEffect(() => {
-    fetchExpenses();
+    // fetchExpenses();
   }, []);
 
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0).toFixed(2);
