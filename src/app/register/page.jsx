@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -111,8 +112,14 @@ export default function RegisterPage() {
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full transition-all duration-300 hover:shadow-2xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-2xl font-bold rounded-full flex items-center justify-center shadow-md">
-            POS
+          <div className="w-16 h-16 text-2xl font-bold rounded-full flex items-center justify-center shadow-md">
+            <Image
+              src="/logo1.png"
+              alt="Panze Logo"
+              width={100}
+              height={100}
+              className="rounded-xl"
+            />
           </div>
         </div>
 
@@ -131,7 +138,7 @@ export default function RegisterPage() {
               <input
                 name="name"
                 type="text"
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.name ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.name ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#a87903] focus:border-transparent'
                   }`}
                 value={formData.name}
                 onChange={handleChange}
@@ -150,7 +157,7 @@ export default function RegisterPage() {
               <input
                 name="email"
                 type="email"
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.email ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.email ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#a87903] focus:border-transparent'
                   }`}
                 value={formData.email}
                 onChange={handleChange}
@@ -169,7 +176,7 @@ export default function RegisterPage() {
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
-                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.password ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.password ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#a87903] focus:border-transparent'
                   }`}
                 value={formData.password}
                 onChange={handleChange}
@@ -227,7 +234,7 @@ export default function RegisterPage() {
               <input
                 name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
-                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.confirmPassword ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-indigo-300 focus:border-transparent'
+                className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 text-gray-700 transition-all ${errors.confirmPassword ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#a87903] focus:border-transparent'
                   }`}
                 value={formData.confirmPassword}
                 onChange={handleChange}
@@ -252,8 +259,8 @@ export default function RegisterPage() {
             type="submit"
             disabled={isLoading}
             className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${isLoading
-              ? 'bg-indigo-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 shadow-md hover:shadow-lg'
+              ? 'bg-[#0e0e0e] cursor-not-allowed'
+              : 'bg-[#0e0e0e] hover:bg-[#1d1d1d] shadow-md hover:shadow-lg'
               }`}
           >
             {isLoading ? (
@@ -282,7 +289,7 @@ export default function RegisterPage() {
           <div className="mt-4">
             <Link
               href="/"
-              className="block w-full text-center py-2 px-4 border border-gray-200 rounded-lg font-medium text-indigo-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+              className="block w-full text-center py-2 px-4 border border-gray-300 rounded-lg font-medium bg-gray-50 text-[#0e0e0e] hover:bg-[#0e0e0e] hover:border-[#1d1d1d]  hover:text-white transition-all"
             >
               Sign in instead
             </Link>

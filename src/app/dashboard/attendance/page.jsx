@@ -94,8 +94,8 @@ export default function CheckInPage() {
         {/* Check-In Form */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-blue-500 p-6 text-white">
-            <h2 className="text-2xl font-bold text-center">Employee Check-In</h2>
+          <div className="bg-[#111827] p-6 text-white">
+            <h2 className="text-2xl font-bold text-center text-white">Employee Check-In</h2>
             <p className="text-center text-indigo-100 mt-1">Record your daily check-in</p>
           </div>
 
@@ -113,7 +113,7 @@ export default function CheckInPage() {
                   onChange={handleChange}
                   type="text"
                   className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                    errors.name ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-200'
+                    errors.name ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-[#a87903]'
                   }`}
                   placeholder="Enter your full name"
                   required
@@ -126,7 +126,7 @@ export default function CheckInPage() {
                 <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
                   <FiCalendar className="mr-2" /> Date
                 </label>
-                <div className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+                <div className="w-full px-4 py-2 border text-gray-400 border-gray-300 rounded-lg bg-gray-50">
                   {new Date().toLocaleDateString()}
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function CheckInPage() {
                 <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
                   <FiClock className="mr-2" /> Time
                 </label>
-                <div className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+                <div className="w-full px-4 py-2 border text-gray-400 border-gray-300 rounded-lg bg-gray-50">
                   {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function CheckInPage() {
               className={`w-full md:w-auto md:px-8 py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${
                 loading
                   ? 'bg-indigo-400 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 shadow-md hover:shadow-lg'
+                  : 'bg-[#111827] hover:bg-[#1a2336] shadow-md hover:shadow-lg'
               }`}
             >
               {loading ? (
@@ -180,10 +180,10 @@ export default function CheckInPage() {
 
         {/* Attendance Records Table */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6">
-          <h2 className="text-xl font-bold mb-4">Attendance Records</h2>
+          <h2 className="text-xl text-gray-700 font-bold mb-4">Attendance Records</h2>
           
           {attendanceRecords.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-700">
               No attendance records found
             </div>
           ) : (

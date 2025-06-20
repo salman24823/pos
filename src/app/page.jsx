@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -56,8 +57,14 @@ export default function LoginPage() {
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full transition-all duration-300 hover:shadow-2xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-2xl font-bold rounded-full flex items-center justify-center shadow-md">
-            POS
+          <div className="w-16 h-16 text-2xl font-bold rounded-full flex items-center justify-center shadow-md">
+            <Image
+              src="/logo1.png"
+              alt="Panze Logo"
+              width={100}
+              height={100}
+              className="rounded-xl"
+            />
           </div>
         </div>
 
@@ -81,7 +88,7 @@ export default function LoginPage() {
               </div>
               <input
                 type="email"
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent text-gray-700 transition-all"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a87903] focus:border-transparent text-gray-700 transition-all"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
@@ -98,7 +105,7 @@ export default function LoginPage() {
               </div>
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent text-gray-700 transition-all"
+                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a87903] focus:border-transparent text-gray-700 transition-all"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
@@ -143,7 +150,7 @@ export default function LoginPage() {
             disabled={isLoading}
             className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${isLoading
                 ? 'bg-indigo-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 shadow-md hover:shadow-lg'
+                : 'bg-[#0e0e0e] hover:bg-[#1d1d1d] shadow-md hover:shadow-lg'
               }`}
           >
             {isLoading ? (
@@ -172,7 +179,7 @@ export default function LoginPage() {
           <div className="mt-4">
             <Link
               href="/register"
-              className="block w-full text-center py-2 px-4 border border-gray-200 rounded-lg font-medium text-indigo-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+              className="block w-full text-center py-2 px-4 border border-gray-200 rounded-lg font-medium bg-gray-50 text-[#0e0e0e] hover:bg-[#0e0e0e] hover:text-white hover:border-[#1d1d1d] transition-all"
             >
               Create new account
             </Link>

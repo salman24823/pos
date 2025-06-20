@@ -70,7 +70,7 @@ export default function ProfilePage() {
   <textarea
     rows={3}
     placeholder="Share what you are thinking here..."
-    className="w-full p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+    className="w-full p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#a87903]"
   />
 
   <div className="flex justify-between items-center mt-4">
@@ -79,7 +79,7 @@ export default function ProfilePage() {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-gray-700">First Name</label>
         <input
-          className="border-2 rounded p-2 w-full"
+          className="border-2 rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-[#a87903]"
           type="text"
           placeholder="First name"
         />
@@ -88,7 +88,7 @@ export default function ProfilePage() {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-gray-700">Last Name</label>
         <input
-          className="border-2 rounded p-2 w-full"
+          className="border-2 rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-[#a87903]"
           type="text"
           placeholder="Last name"
         />
@@ -99,7 +99,7 @@ export default function ProfilePage() {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-gray-700">Username</label>
         <input
-          className="border-2 rounded p-2 w-full"
+          className="border-2 rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-[#a87903]"
           type="text"
           placeholder="Enter Username"
         />
@@ -108,7 +108,7 @@ export default function ProfilePage() {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-gray-700">Password</label>
         <input
-          className="border-2 rounded p-2 w-full"
+          className="border-2 rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-[#a87903]"
           type="password"
           placeholder="Enter password"
         />
@@ -117,7 +117,7 @@ export default function ProfilePage() {
 
     <button
       type="submit"
-      className="bg-black text-white px-6 py-2 rounded-lg mt-2 hover:bg-gray-800 transition"
+      className="bg-[#111827] text-white px-6 py-2 rounded-lg mt-2 hover:bg-[#1a2336] transition"
     >
       Submit
     </button>

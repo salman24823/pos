@@ -45,13 +45,13 @@ export default function EmployeesPage() {
 
   return (
       <main className="flex-1 p-6 space-y-6 bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6">Employees</h1>
+        <h1 className="text-3xl font-bold mb-6 text-[#111827]">Employees</h1>
         <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="font-semibold mb-4 text-lg">Logged-In Employees</h2>
+          <h2 className="font-semibold mb-4 text-lg text-gray-700">Logged-In Employees</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="text-left border-b text-gray-500">
+                <tr className="text-left border-b text-gray-600">
                   <th className="px-6 py-3">Name</th>
                   <th className="px-6 py-3">Email</th>
                   <th className="px-6 py-3">Phone</th>
@@ -61,7 +61,7 @@ export default function EmployeesPage() {
                 {employees.map((employee, index) => (
                   <tr
                     key={employee._id || employee.id || index }
-                    className="border-b hover:bg-gray-50"
+                    className="border-b text-gray-500 hover:bg-gray-50"
                   >
                     <td className="px-6 py-4">{employee.fullname || employee.name}</td>
                     <td className="px-6 py-4">
@@ -76,7 +76,7 @@ export default function EmployeesPage() {
                     <td className="px-6 py-4">{employee.phone || employee.contact}</td>
                     <td className="px-6 py-4">
                       <button
-                        className="bg-red-600 text-white p-2 px-4 shadow-lg rounded-md hover:bg-red-500 transition">
+                        className="bg-[#111827] text-white p-2 px-4 shadow-lg rounded-md hover:bg-[#1a2336] transition">
                         Terminate 
                       </button>
                     </td>
