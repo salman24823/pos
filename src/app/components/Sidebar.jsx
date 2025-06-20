@@ -1,7 +1,7 @@
 
-
-
 'use client';
+
+ ebd885892ba5840fb50d66e4eaf6e3cf1429a08c
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,19 +29,19 @@ export default function Sidebar() {
   return (
     <aside className="max-lg:hidden relative w-64 bg-gray-900 text-white py-4 space-y-2">
       <div className='sticky top-4'>
-        {/* LOGO SECTION */}
-        <div className="flex items-center px-4 mb-8">
-          <div className="w-12 h-12 relative mr-3">
-            <Image
-              src="/public/th.png" // ✅ Correct path (NO 'public' prefix)
-              alt="Logo"
-              fill
-              className="object-contain rounded-full"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold">EAST IS WEST</span>
-            <span className="text-sm text-gray-400"></span>
+
+        {/* ✅ Logo Display */}
+        <div className="flex flex-col items-center mb-6">
+          <Image
+            src="/logo1.png"
+            alt="Panze Logo"
+            width={80}
+            height={80}
+            className="rounded-xl"
+          />
+          <div className="text-2xl font-bold mt-2">
+            <span>EAST IS WEST </span>
+            <span className="text-gray-400 ml-1 text-sm"></span>
           </div>
         </div>
 

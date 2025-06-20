@@ -33,42 +33,96 @@ export default function CheckInPage() {
     if (errors[name]) setErrors({ ...errors, [name]: '' });
   };
 
-  const handleCheckIn = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    setLoading(true);
+  // const handleCheckIn = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+  //   setLoading(true);
 
-    try {
-      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const location = await getLocation();
+  //   try {
+  //     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  //     const location = await getLocation();
       
-      const newEntry = {
-        ...formData,
-        time: currentTime,
-        location: location || 'Location not available',
-        status: 'Checked-In',
-        date: new Date().toLocaleDateString()
-      };
+  //     const newEntry = {
+  //       ...formData,
+  //       time: currentTime,
+  //       location: location || 'Location not available',
+  //       status: 'Checked-In',
+  //       date: new Date().toLocaleDateString()
+  //     };
 
-      const updatedRecords = [...attendanceRecords, newEntry];
-      localStorage.setItem('checkInRecords', JSON.stringify(updatedRecords));
-      setAttendanceRecords(updatedRecords);
+  //     const updatedRecords = [...attendanceRecords, newEntry];
+  //     localStorage.setItem('checkInRecords', JSON.stringify(updatedRecords));
+  //     setAttendanceRecords(updatedRecords);
       
-      // Reset form
-      setFormData({
-        name: '',
-        date: new Date().toISOString().split('T')[0],
-        time: '',
-        location: '',
-      });
+  //     // Reset form
+  //     setFormData({
+  //       name: '',
+  //       date: new Date().toISOString().split('T')[0],
+  //       time: '',
+  //       location: '',
+  //     });
 
-      toast.success('Checked in successfully!');
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
+  //     toast.success('Checked in successfully!');
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+const handleCheckIn = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+  setLoading(true);
+
+  try {
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const location = await getLocation();
+
+    const newEntry = {
+      ...formData,
+      time: currentTime,
+      location: location || 'Location not available',
+      status: 'Checked-In',
+      date: new Date().toLocaleDateString(),
+    };
+
+    // ✅ 1. Save to backend
+    const res = await fetch('/api/checkin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newEntry),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || 'Check-in failed');
     }
-  };
+
+    // ✅ 2. Save to localStorage
+    const updatedRecords = [...attendanceRecords, newEntry];
+    localStorage.setItem('checkInRecords', JSON.stringify(updatedRecords));
+    setAttendanceRecords(updatedRecords);
+
+    // ✅ Reset form
+    setFormData({
+      name: '',
+      date: new Date().toISOString().split('T')[0],
+      time: '',
+      location: '',
+    });
+
+    toast.success('Checked in successfully!');
+  } catch (error) {
+    toast.error(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import dbConnection from "@/app/config/db";
+import dbConnection from "@/config/db";
 import mongoose from "mongoose";
 import User from "@/models/userModel";
 import bcrypt from 'bcrypt';

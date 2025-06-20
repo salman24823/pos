@@ -1,21 +1,22 @@
-// app/api/checkin/route.js
-export async function POST(request) {
-  try {
-    const body = await request.json();
-    const { name, employeeId } = body;
+import dbConnection from '@/config/db';
+import Checkin from '@/models/checkinModel';
 
-    if (!name || !employeeId) {
-      return Response.json({ error: 'All fields are required' }, { status: 400 });
-    }
+export async function POST(req) {
+  await dbConnection();
+  const body = await req.json();
 
-    const checkInTime = new Date().toISOString();
+  const { name, date, time, location, status } = body;
 
-    // Example: save to DB (placeholder)
-    console.log('Checked in:', { name, employeeId, checkInTime });
-
-    return Response.json({ message: 'Check-in successful' });
-  } catch (error) {
-    console.error('Check-in error:', error);
-    return Response.json({ error: 'Server error' }, { status: 500 });
+  if (!name || !date || !time || !location) {
+    return Response.json({ message: 'Missing required fields' }, { status: 400 });
   }
+
+  const newCheckin = await Checkin.create({ name, date, time, location, status });
+  return Response.json({ message: 'Check-in successful', checkin: newCheckin }, { status: 201 });
+}
+
+export async function GET() {
+  await dbConnection();
+  const checkins = await Checkin.find().sort({ createdAt: -1 });
+  return Response.json(checkins, { status: 200 });
 }
