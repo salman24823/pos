@@ -37,7 +37,6 @@ export default function Sidebar() {
           />
           <div className="text-2xl font-bold mt-2">
             <span>EAST IS WEST </span>
-            <span className="text-gray-400 ml-1 text-sm"></span>
           </div>
         </div>
 

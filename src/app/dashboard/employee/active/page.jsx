@@ -19,41 +19,17 @@ export default function ActiveEmployeesPage() {
   ];
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#0E0E18] text-white p-4 space-y-4">
-        <div className="text-2xl font-bold mb-6">
-          panze <span className="text-sm">studio</span>
-        </div>
-        <nav className="space-y-2 text-sm">
-          {navItems.map((item, idx) => (
-            <Link
-              key={idx}
-              href={
-                item === 'Dashboard' ? '/dashboard' :
-                item === 'Employees' ? '/employees' :
-                item === 'Active Employees' ? '/employees/active' : '#'
-              }
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-800 ${
-                item === 'Active Employees' ? 'bg-gray-700' : ''
-              }`}
-            >
-              <span className="text-lg">🔹</span>
-              <span>{item}</span>
-            </Link>
-          ))}
-        </nav>
-      </aside>
+    <div className="flex min-h-screen w-full">
 
       {/* Main Content */}
       <main className="flex-1 p-6 space-y-6 bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6">Active Employees</h1>
+        <h1 className="text-3xl font-bold mb-6 text-[#111827]">Active Employees</h1>
         <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="font-semibold mb-4 text-lg">Active Employees List</h2>
+          <h2 className="font-semibold mb-4 text-lg text-gray-700">Active Employees List</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="text-left border-b text-gray-500">
+                <tr className="text-left border-b text-gray-600">
                   <th className="px-6 py-3">ID</th>
                   <th className="px-6 py-3">Name</th>
                   <th className="px-6 py-3">Email</th>
@@ -63,7 +39,7 @@ export default function ActiveEmployeesPage() {
                 {employees.map((employee) => (
                   <tr
                     key={employee.id}
-                    className="border-b hover:bg-gray-50"
+                    className="border-b text-gray-500 hover:bg-gray-50"
                   >
                     <td className="px-6 py-4">{employee.id}</td>
                     <td className="px-6 py-4">
