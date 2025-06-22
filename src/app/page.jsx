@@ -27,29 +27,31 @@ export default function LoginPage() {
 
     setIsLoading(true);
 
-    try {
-      // Replace with your actual API endpoint
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    window.location.replace("/dashboard")
 
-      const data = await response.json();
+    // try {
+    //   // Replace with your actual API endpoint
+    //   const response = await fetch('/api/auth/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ email, password }),
+    //   });
 
-      if (!response.ok) {
-        return toast.error(data.message || 'Login failed');
-      }
+    //   const data = await response.json();
 
-      // Redirect to dashboard
-      window.location.replace('/dashboard');
-    } catch (err) {
-      setError(err.message || 'An error occurred during login');
-    } finally {
-      setIsLoading(false);
-    }
+    //   if (!response.ok) {
+    //     return toast.error(data.message || 'Login failed');
+    //   }
+
+    //   // Redirect to dashboard
+    //   window.location.replace('/dashboard');
+    // } catch (err) {
+    //   setError(err.message || 'An error occurred during login');
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   return (
