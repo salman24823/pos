@@ -1,4 +1,5 @@
-import dbConnection from '@/config/db';
+import db from './config/dbConnect';
+
 import Checkin from '@/models/checkinModel';
 
 export async function POST(req) {
