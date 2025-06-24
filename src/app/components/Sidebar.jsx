@@ -16,7 +16,7 @@ export default function Sidebar() {
     { name: 'Dashboard', icon: FiHome, path: '/dashboard' },
     { name: 'Attendance', icon: FiClock, path: '/dashboard/attendance' },
     { name: 'Check In', icon: FiClock, path: '/dashboard/checkIn' },
-    { name: 'Check Out', icon: FiClock, path: '/dashboard/checkOut' },
+    { name: 'Check Out', icon: FiClock, path: '/dashboard/checkout' },
     { name: 'Sales', icon: FiShoppingCart, path: '/dashboard/sales' },
     { name: 'Purchases', icon: FiShoppingBag, path: '/dashboard/purchases' },
     { name: 'Expenses', icon: FiPieChart, path: '/dashboard/expenses' },
