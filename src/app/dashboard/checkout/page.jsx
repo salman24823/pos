@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { FiUser, FiCalendar, FiClock, FiMapPin, FiLoader, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-export default function CheckoutPage() {
+export default function CheckOut() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -70,7 +70,7 @@ export default function CheckoutPage() {
   //   }
   // };
 
-const handleCheckOut = async (e) => {
+const handleCheckIn = async (e) => {
   e.preventDefault();
   if (!validateForm()) return;
   setLoading(true);
@@ -86,12 +86,12 @@ const handleCheckOut = async (e) => {
       ...formData,
       time: currentTime,
       location: location || 'Location not available',
-      status: 'Checked-Out',
+      status: 'Checked-In',
       date: new Date().toLocaleDateString(),
     };
 
     // ✅ 1. Save to backend
-    const res = await fetch('/api/checkout', {
+    const res = await fetch('/api/checkin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newEntry),
@@ -99,12 +99,12 @@ const handleCheckOut = async (e) => {
 
     if (!res.ok) {
       const data = await res.json();
-      throw new Error(data.message || 'Check-Out failed');
+      throw new Error(data.message || 'Check-in failed');
     }
 
     // ✅ 2. Save to localStorage
     const updatedRecords = [...attendanceRecords, newEntry];
-    localStorage.setItem('checkOutRecords', JSON.stringify(updatedRecords));
+    localStorage.setItem('checkInRecords', JSON.stringify(updatedRecords));
     setAttendanceRecords(updatedRecords);
 
     // ✅ Reset form
@@ -115,7 +115,7 @@ const handleCheckOut = async (e) => {
       location: '',
     });
 
-    toast.success('Checked Out successfully!');
+    toast.success('Checked in successfully!');
   } catch (error) {
     toast.error(error.message);
   } finally {
@@ -148,13 +148,13 @@ const handleCheckOut = async (e) => {
         {/* Check-In Form */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-[#111827] text-white p-6">
+          <div className=" bg-[#111827] p-6 text-white">
             <h2 className="text-2xl font-bold text-center">Employee Check-Out</h2>
-            <p className="text-center text-indigo-100 mt-1">Record your daily check-Out</p>
+            <p className="text-center text-indigo-100 mt-1">Record your daily check-in</p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleCheckOut} className="p-6 space-y-5">
+          <form onSubmit={handleCheckIn} className="p-6 space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Name Field */}
               <div>
@@ -214,7 +214,7 @@ const handleCheckOut = async (e) => {
               className={`w-full md:w-auto md:px-8 py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${
                 loading
                   ? 'bg-indigo-400 cursor-not-allowed'
-                  : 'bg-[#111827] shadow-md hover:bg-[#1a2336]'
+                  : ' bg-[#0e0e0e] shadow-md hover:bg-[#1d1d1d]'
               }`}
             >
               {loading ? (
