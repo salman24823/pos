@@ -1,7 +1,6 @@
-import db from './config/dbConnect';
-
+// import db from './config/dbConnect';
+import dbConnection from '@/config/db';
 import Checkin from '@/models/checkinModel';
-
 export async function POST(req) {
   await dbConnection();
   const body = await req.json();
@@ -21,3 +20,4 @@ export async function GET() {
   const checkins = await Checkin.find().sort({ createdAt: -1 });
   return Response.json(checkins, { status: 200 });
 }
+
