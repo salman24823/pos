@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
 const dbConnection = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    console.log("mongodb is Already Connected!");
-    return;
-  }
+  if (mongoose.connections[0].readyState) return;
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
   try {
     await mongoose.connect(process.env.MONGODB_URI);

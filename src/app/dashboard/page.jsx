@@ -8,14 +8,6 @@ import {
   FiAlertTriangle, FiBox, FiRefreshCw, FiCheckCircle, FiClock
 } from 'react-icons/fi';
 
-const salesData = [
-  { month: 'Feb', sales: 3000, purchases: 2400 },
-  { month: 'Mar', sales: 4000, purchases: 2600 },
-  { month: 'Apr', sales: 3500, purchases: 1800 },
-  { month: 'May', sales: 5000, purchases: 3000 },
-  { month: 'Jun', sales: 4200, purchases: 2700 },
-];
-
 const invoices = [
   { id: 'INV001', customer: 'Skylar Price', date: '11/02/2024', amount: '$354', status: 'Delivered' },
   { id: 'INV002', customer: 'Julian', date: '11/09/2024', amount: '$910', status: 'In Progress' },
@@ -43,11 +35,16 @@ export default function Dashboard() {
       try {
         const res = await fetch('/api/expense');
         const data = await res.json();
-        setTotalExpense(data.total || 0);
+        if (res.ok && data.total !== undefined) {
+          setTotalExpense(data.total);
+        } else {
+          throw new Error(data.message || 'Failed to load expense');
+        }
       } catch (err) {
-        console.error("Failed to load total expense");
+        console.error("❌ Failed to load total expense:", err.message);
       }
     };
+
     fetchTotalExpenses();
   }, []);
 
@@ -62,10 +59,10 @@ export default function Dashboard() {
     },
     {
       title: 'Total Expense',
-      value: `$${totalExpense.toLocaleString()}`,  // dynamically loaded
+      value: `$${totalExpense.toLocaleString()}`, // ✅ formatted dynamically
       change: '8%',
-      isPositive: true,
-      icon: <FiTrendingUp className="text-yellow-500 text-2xl" />,
+      isPositive: false,
+      icon: <FiTrendingDown className="text-yellow-500 text-2xl" />,
       color: 'bg-yellow-100'
     },
     {
@@ -105,7 +102,6 @@ export default function Dashboard() {
             <h2 className="font-semibold text-lg">Recent Invoices</h2>
             <button className="text-sm text-indigo-600 hover:underline">View All</button>
           </div>
-          
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -158,12 +154,12 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* Alerts */}
           <div className="bg-white p-5 rounded-xl shadow-sm border">
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-semibold text-lg">Stock Alerts</h2>
               <button className="text-sm text-indigo-600 hover:underline">Manage</button>
             </div>
-            
             <div className="space-y-3">
               {alerts.map((item, idx) => (
                 <div key={idx} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
