@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import SummaryCard from './components/SummaryCard';
 import SalesChart from './components/SalesChart';
-import { 
+import {
   FiTrendingUp, FiTrendingDown, FiDollarSign, FiDownload, FiUpload,
   FiAlertTriangle, FiBox, FiRefreshCw, FiCheckCircle, FiClock
 } from 'react-icons/fi';
@@ -52,35 +52,35 @@ export default function Dashboard() {
   }, []);
 
   const summaryCards = [
-    { 
-      title: 'Total Sales', 
-      value: '$12,345', 
-      change: '20%', 
-      isPositive: true, 
+    {
+      title: 'Total Sales',
+      value: '$12,345',
+      change: '20%',
+      isPositive: true,
       icon: <FiTrendingUp className="text-green-500 text-2xl" />,
       color: 'bg-green-100'
     },
-    { 
-      title: 'Total Expense', 
+    {
+      title: 'Total Expense',
       value: `$${totalExpense.toLocaleString()}`,  // dynamically loaded
-      change: '8%', 
-      isPositive: true, 
+      change: '8%',
+      isPositive: true,
       icon: <FiTrendingUp className="text-yellow-500 text-2xl" />,
       color: 'bg-yellow-100'
     },
-    { 
-      title: 'Payment Sent', 
-      value: '$65,920', 
-      change: '32%', 
-      isPositive: true, 
+    {
+      title: 'Payment Sent',
+      value: '$65,920',
+      change: '32%',
+      isPositive: true,
       icon: <FiUpload className="text-blue-500 text-2xl" />,
       color: 'bg-blue-100'
     },
-    { 
-      title: 'Payment Received', 
-      value: '$72,840', 
-      change: '3%', 
-      isPositive: false, 
+    {
+      title: 'Payment Received',
+      value: '$72,840',
+      change: '3%',
+      isPositive: false,
       icon: <FiDownload className="text-red-500 text-2xl" />,
       color: 'bg-red-100'
     },
@@ -181,3 +181,5 @@ export default function Dashboard() {
     </main>
   );
 }
+
+
