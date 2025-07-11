@@ -1,4 +1,4 @@
-import { connectDB } from "@/config/db";
+import { connectDB } from "@/lib/db"; 
 
 import User from "@/models/User";
 import { verifyToken } from "@/lib/auth";
