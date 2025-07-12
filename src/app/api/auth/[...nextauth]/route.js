@@ -1,37 +1,33 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { connectDB } from "@/lib/db";
-import User from "@/models/userModel";
+import { NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs';
+import { connectDB } from '@/lib/db';
+import User from '@/models/userModel';
 
-const handler = NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        await connectDB();
+export async function POST(req) {
+  await connectDB();
 
-        const user = await User.findOne({ email: credentials.email });
-        if (!user) throw new Error("No user found with this email");
+  const body = await req.json();
+  const { email, password } = body;
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) throw new Error("Invalid password");
+  if (!email || !password) {
+    return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
+  }
 
-        return { id: user._id, name: user.name, email: user.email };
-      },
-    }),
-  ],
-  pages: {
-    signIn: "/",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-});
+  const user = await User.findOne({ email });
+  if (!user) {
+    return NextResponse.json({ success: false, error: 'User not found' }, { status: 401 });
+  }
 
-export { handler as GET, handler as POST };
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return NextResponse.json({ success: false, error: 'Invalid password' }, { status: 401 });
+  }
+
+  return NextResponse.json({
+    success: true,
+    user: {
+      name: user.name,
+      email: user.email,
+    },
+  });
+}
