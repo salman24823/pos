@@ -4,9 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { signIn }
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
-// import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,31 +15,31 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setError('');
-  //   setIsLoading(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
 
-  //   if (!email || !password) {
-  //     setError('Please fill in all fields');
-  //     setIsLoading(false);
-  //     return;
-  //   }
+    if (!email || !password) {
+      setError('Please fill in all fields');
+      setIsLoading(false);
+      return;
+    }
 
-  //   const res = await signIn('credentials', {
-  //     redirect: false,
-  //     email,
-  //     password,
-  //   });
+    const res = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
 
-  //   if (res?.ok) {
-  //     router.push('/dashboard');
-  //   } else {
-  //     setError('Invalid email or password');
-  //   }
+    if (res?.ok) {
+      router.push('/dashboard');
+    } else {
+      setError('Invalid email or password');
+    }
 
-  //   setIsLoading(false);
-  // };
+    setIsLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-50 px-4 py-8">
@@ -69,7 +68,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block mb-2 font-medium text-gray-700">Email</label>
             <div className="relative">

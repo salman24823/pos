@@ -1,24 +1,18 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI)
-  throw new Error("⚠️ MONGODB_URI is not defined in .env.local");
+let isConnected = false;
 
-let cached = global.mongoose || { conn: null, promise: null };
+export const connectDB = async () => {
+  if (isConnected) return;
 
-export async function connectDB() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        dbName: "pos-auth",
-        bufferCommands: false,
-      })
-      .then((mongoose) => mongoose);
+  try {
+    await mongoose.connect(MONGODB_URI);
+    isConnected = true;
+    console.log('✅ MongoDB Connected');
+  } catch (error) {
+    console.error('❌ MongoDB Error:', error);
   }
+};
 
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
