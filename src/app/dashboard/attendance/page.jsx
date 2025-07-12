@@ -34,7 +34,7 @@ export default function AttendancePage() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        <h1 className="text-center text-3xl font-bold text-gray-800">Employee Attendance</h1>
+        <h1 className="text-center text-2xl font-bold text-gray-800">Employee Attendance</h1>
 
         {/* Filters */}
         <div className="flex justify-center gap-3">
@@ -52,7 +52,7 @@ export default function AttendancePage() {
         </div>
 
         {/* Attendance Table */}
-        <div className="bg-white rounded-xl p-6 shadow overflow-auto">
+        <div className="bg-white rounded-xl p-6 shadow-sm overflow-auto">
           <table className="min-w-full text-sm text-left">
             <thead className="bg-gray-100">
               <tr>
