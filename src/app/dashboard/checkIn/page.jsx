@@ -377,10 +377,10 @@ export default function CheckInPage() {
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Check-In Form */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className=" bg-[#111827] p-6 text-white text-center">
-            <h2 className="text-2xl font-bold">Employee Check-In</h2>
-            <p className="text-indigo-100 mt-1">Record your daily check-in</p>
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className=" bg-[#111827] p-2 text-white flex justify-between items-center">
+            <h2 className="text-1xl font-bold ml-4">Employee Check-In</h2>
+            <p className="text-indigo-100 mt-1 mr-4">Record your daily check-in</p>
           </div>
 
           <form onSubmit={handleCheckIn} className="p-6 space-y-5">
@@ -465,7 +465,7 @@ export default function CheckInPage() {
 
 
         {/* Records Table */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
           <h2 className="text-xl font-bold mb-4 text-gray-700">Attendance Records</h2>
           {attendanceRecords.length === 0 ? (
             <div className="text-center py-8 text-gray-700">No attendance records found</div>
