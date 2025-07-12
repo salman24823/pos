@@ -14,13 +14,13 @@ import {
 export default function Sidebar() {
   const navItems = [
     { name: 'Dashboard', icon: FiHome, path: '/dashboard' },
-    { name: 'Attendance', icon: FiClock, path: '/dashboard/attendance' },
     { name: 'Check In', icon: FiClock, path: '/dashboard/checkIn' },
     { name: 'Check Out', icon: FiClock, path: '/dashboard/checkout' },
+    { name: 'Attendance', icon: FiClock, path: '/dashboard/attendance' },
     // { name: 'Sales', icon: FiShoppingCart, path: '/dashboard/sales' },
     // { name: 'Purchases', icon: FiShoppingBag, path: '/dashboard/purchases' },
+    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/employees' },
     { name: 'Expenses', icon: FiPieChart, path: '/dashboard/expenses' },
-    { name: 'Staff Members', icon: FiUsers, path: '/dashboard/employee' },
     // { name: 'Sales Reports', icon: FiBarChart2, path: '/dashboard/reports' },
     // { name: 'Settings', icon: FiSettings, path: '/dashboard/settings' },
     { name: 'Logout', icon: FiLogOut, path: '/' },
