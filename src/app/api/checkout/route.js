@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import dbConnection from '@/config/db';
 import Checkout from '@/models/checkoutModel';
+import { connectDB } from '@/lib/db';
 
 export async function POST(req) {
-  await dbConnection();
+  await connectDB();
   const body = await req.json();
 
   const { name, date, time, location, status } = body;
@@ -17,7 +17,7 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  await dbConnection();
+  await connectDB();
   const checkouts = await Checkout.find().sort({ createdAt: -1 });
   return NextResponse.json(checkouts, { status: 200 });
 }

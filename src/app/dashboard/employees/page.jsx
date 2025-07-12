@@ -54,7 +54,7 @@ export default function EmployeesPage() {
                 <tr key={employee._id || index} className="border-b text-gray-500 hover:bg-gray-50">
                   <td className="px-4 sm:px-6 py-4">{employee.fullname || employee.name}</td>
                   <td className="px-4 sm:px-6 py-4">
-                    <Link href={`/employees/${employee._id}`} className="text-blue-500 hover:underline break-all">
+                    <Link href={`/dashboard/employees/${employee._id}`} className="text-blue-500 hover:underline break-all">
                       {employee.email}
                     </Link>
                   </td>

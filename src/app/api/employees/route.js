@@ -1,11 +1,11 @@
 
-import dbConnection from '@/config/db';
+import { connectDB } from '@/lib/db';
 import User from '@/models/userModel';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
   try {
-    await dbConnection();
+    await connectDB();
     const employees = await User.find({ isTerminate: false });
     return NextResponse.json(employees);
   } catch (error) {

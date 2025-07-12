@@ -1,9 +1,9 @@
-// import db from './config/dbConnect';
-import dbConnection from '@/config/db';
+import { connectDB } from '@/lib/db';
 import Checkin from '@/models/checkinModel';
 import { NextResponse } from 'next/server';
+
 export async function POST(req) {
-  await dbConnection();
+  await connectDB();
   const body = await req.json();
 
   const { name, date, time, location, status } = body;
@@ -17,7 +17,7 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  await dbConnection();
+  await connectDB();
   const checkins = await Checkin.find().sort({ createdAt: -1 });
   return NextResponse.json(checkins, { status: 200 });
 }

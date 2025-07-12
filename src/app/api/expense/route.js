@@ -1,11 +1,11 @@
 // src/app/api/expense/route.js
 import { NextResponse } from 'next/server';
-import dbConnection from '@/config/db';
 import Expense from '@/models/expenses';
+import { connectDB } from '@/lib/db';
 
 // GET /api/expense
 export async function GET() {
-  await dbConnection();
+  await connectDB();
   try {
     const expenses = await Expense.find().sort({ createdAt: -1 });
     const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
@@ -17,7 +17,7 @@ export async function GET() {
 
 // POST /api/expense
 export async function POST(request) {
-  await dbConnection();
+  await connectDB();
   try {
     const body = await request.json();
     const newExpense = new Expense(body);

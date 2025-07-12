@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -23,6 +22,13 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    weeklyPay: { type: Number, default: 0 },
+    payHistory: [
+      {
+        amount: Number,
+        date: String,
+      },
+    ],
   },
   { timestamps: true }
 );

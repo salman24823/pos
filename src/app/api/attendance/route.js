@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import dbConnection from '@/config/db';
 import Checkin from '@/models/checkinModel';
 import Checkout from '@/models/checkoutModel';
+import { connectDB } from '@/lib/db';
 
 export async function GET() {
-  await dbConnection();
+  await connectDB();
 
   const checkins = await Checkin.find().lean();
   const checkouts = await Checkout.find().lean();
