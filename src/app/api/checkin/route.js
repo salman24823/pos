@@ -1,5 +1,5 @@
 // import db from './config/dbConnect';
-import dbConnection from '@/config/db';
+import dbConnection from '@/config/dbConnection';
 import Checkin from '@/models/checkinModel';
 import { NextResponse } from 'next/server';
 export async function POST(req) {

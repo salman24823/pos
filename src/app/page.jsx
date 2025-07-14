@@ -32,10 +32,8 @@ export default function LoginPage() {
       password,
     });
 
-    if (res?.ok) {
-      router.push('/dashboard');
-    } else {
-      setError('Invalid email or password');
+    if (res?.error) {
+      console.log(res.error); // Inspect actual error
     }
 
     setIsLoading(false);
@@ -137,11 +135,10 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${
-              isLoading
+            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all flex items-center justify-center ${isLoading
                 ? 'bg-indigo-400 cursor-not-allowed'
                 : 'bg-[#0e0e0e] hover:bg-[#1d1d1d] shadow-md hover:shadow-lg'
-            }`}
+              }`}
           >
             {isLoading ? (
               <>

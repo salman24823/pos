@@ -1,6 +1,6 @@
 // src/app/api/expense/route.js
 import { NextResponse } from 'next/server';
-import dbConnection from '@/config/db';
+import dbConnection from '@/config/dbConnection';
 import Expense from '@/models/expenses';
 
 // GET /api/expense
