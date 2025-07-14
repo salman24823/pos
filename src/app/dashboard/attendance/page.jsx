@@ -7,6 +7,8 @@ export default function AttendancePage() {
   const [records, setRecords] = useState([]);
   const [filter, setFilter] = useState('today');
 
+  const payPerHour = 500; // Set your pay per hour here
+
   useEffect(() => {
     fetchMergedAttendance();
   }, []);
@@ -31,10 +33,42 @@ export default function AttendancePage() {
     return true;
   });
 
+const calculateTotalHours = (checkIn, checkOut) => {
+  if (!checkIn || !checkOut || checkIn === '-' || checkOut === '-') return '-';
+
+  const parseTime = (timeStr) => {
+    const [time, modifier] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+
+    if (modifier === 'PM' && hours !== 12) {
+      hours += 12;
+    }
+    if (modifier === 'AM' && hours === 12) {
+      hours = 0;
+    }
+
+    return hours * 60 + minutes;
+  };
+
+  try {
+    const minutesIn = parseTime(checkIn);
+    const minutesOut = parseTime(checkOut);
+
+    const diffMinutes = minutesOut - minutesIn;
+    if (diffMinutes <= 0) return '-';
+
+    const hours = (diffMinutes / 60).toFixed(2);
+    return hours;
+  } catch (err) {
+    return '-';
+  }
+};
+
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        <h1 className="text-center text-3xl font-bold text-gray-800">Employee Attendance</h1>
+        <h1 className="text-center text-2xl font-bold text-gray-800">Employee Attendance</h1>
 
         {/* Filters */}
         <div className="flex justify-center gap-3">
@@ -52,7 +86,7 @@ export default function AttendancePage() {
         </div>
 
         {/* Attendance Table */}
-        <div className="bg-white rounded-xl p-6 shadow overflow-auto">
+        <div className="bg-white rounded-xl p-6 shadow-sm overflow-auto">
           <table className="min-w-full text-sm text-left">
             <thead className="bg-gray-100">
               <tr>
@@ -60,6 +94,7 @@ export default function AttendancePage() {
                 <th className="px-4 py-2">Date</th>
                 <th className="px-4 py-2">Check-In</th>
                 <th className="px-4 py-2">Check-Out</th>
+                <th className="px-4 py-2">Total Hours</th>
                 <th className="px-4 py-2">Status</th>
                 <th className="px-4 py-2">Location</th>
               </tr>
@@ -67,7 +102,7 @@ export default function AttendancePage() {
             <tbody>
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="text-center py-6 text-gray-500">
+                  <td colSpan="7" className="text-center py-6 text-gray-500">
                     No records found
                   </td>
                 </tr>
@@ -78,6 +113,9 @@ export default function AttendancePage() {
                     <td className="px-4 py-2">{rec.date}</td>
                     <td className="px-4 py-2">{rec.checkInTime || '-'}</td>
                     <td className="px-4 py-2">{rec.checkOutTime || '-'}</td>
+                    <td className="px-4 py-2">
+                      {calculateTotalHours(rec.checkInTime, rec.checkOutTime)}
+                    </td>
                     <td className="px-4 py-2">{rec.status}</td>
                     <td className="px-4 py-2">{rec.location}</td>
                   </tr>

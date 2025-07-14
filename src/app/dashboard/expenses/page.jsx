@@ -79,10 +79,10 @@ export default function ExpensePage() {
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="bg-[#111827] p-6 text-white text-center">
-            <h2 className="text-2xl font-bold">Expense Manager</h2>
-            <p className="text-indigo-100 mt-1">Track your spending easily</p>
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-[#111827] p-2 text-white flex justify-between items-center">
+            <h2 className="text-1xl font-bold ml-4">Expense Manager</h2>
+            <p className="text-indigo-100 mt-1 mr-4">Track your spending easily</p>
           </div>
 
           {/* Form */}
@@ -125,13 +125,13 @@ export default function ExpensePage() {
         </div>
 
         {/* Total */}
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-bold text-gray-700">Total Expenses</h2>
           <p className="text-4xl font-bold text-gray-900 mt-2">${totalExpenses}</p>
         </div>
 
         {/* Expense List */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
           <h2 className="text-xl font-bold mb-4 text-gray-700">Expense History</h2>
 
           {expenses.length === 0 ? (

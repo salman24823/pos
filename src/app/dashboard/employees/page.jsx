@@ -38,8 +38,8 @@ export default function EmployeesPage() {
 
   return (
       <main className="flex-1 px-4 py-6 sm:px-6 md:px-10 space-y-6 bg-gray-100">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-[#111827]">Employees</h1>
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow">
+        <h1 className="text-2xl sm:text-2xl font-bold mb-4 text-[#111827]">Employees</h1>
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
           <h2 className="bg-white p-4 sm:p-6 rounded-xl shadow">Logged-In Employees</h2>
           <div className="overflow-auto">
             <table className="min-w-full text-sm sm:text-base">
@@ -54,7 +54,7 @@ export default function EmployeesPage() {
                 <tr key={employee._id || index} className="border-b text-gray-500 hover:bg-gray-50">
                   <td className="px-4 sm:px-6 py-4">{employee.fullname || employee.name}</td>
                   <td className="px-4 sm:px-6 py-4">
-                    <Link href={`/employees/${employee._id}`} className="text-blue-500 hover:underline break-all">
+                    <Link href={`/dashboard/employees/${employee._id}`} className="text-blue-500 hover:underline break-all">
                       {employee.email}
                     </Link>
                   </td>

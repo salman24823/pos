@@ -2,6 +2,7 @@
 import dbConnection from '@/config/dbConnection';
 import Checkin from '@/models/checkinModel';
 import { NextResponse } from 'next/server';
+
 export async function POST(req) {
   await dbConnection();
   const body = await req.json();
