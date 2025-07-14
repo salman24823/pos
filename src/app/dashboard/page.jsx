@@ -87,12 +87,12 @@ export default function Dashboard() {
 
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    console.log(session,status, "session")
-    if (status === "unauthenticated") {
-      location.replace("/");
-    }
-  }, [status, session]);
+  // useEffect(() => {
+  //   console.log(session,status, "session")
+  //   if (status === "unauthenticated") {
+  //     // location.replace("/");
+  //   }
+  // }, [status, session]);
 
   
   useEffect(() => {

@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isMatch) throw new Error("Invalid credentials");
 
         // Return user object (attach only safe data)
-        return user
+        return user;
       },
     }),
   ],
@@ -55,6 +55,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
+
+    // authorized: async ({ auth }) => {
+    //   // Logged in users are authenticated, otherwise redirect to login page
+    //   return !!auth;
+    // },
   },
 
   pages: {
@@ -62,4 +67,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-export const { GET, POST } = handlers
+export const { GET, POST } = handlers;
