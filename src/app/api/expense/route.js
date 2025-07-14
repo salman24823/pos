@@ -2,7 +2,6 @@
 import { NextResponse } from 'next/server';
 import dbConnection from '@/config/dbConnection';
 import Expense from '@/models/expenses';
-import { connectDB } from '@/lib/db';
 
 // GET /api/expense
 export async function GET() {

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
 import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -33,10 +34,13 @@ export default function LoginPage() {
     });
 
     if (res?.error) {
+      setIsLoading(false);
       console.log(res.error); // Inspect actual error
+      toast.error('Something went wrong. Please try again.');
     }
 
     setIsLoading(false);
+    router.push('/dashboard'); // Redirect to home page on successful login
   };
 
   return (

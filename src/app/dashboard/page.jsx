@@ -15,11 +15,7 @@ import {
   FiCheckCircle,
   FiClock,
 } from "react-icons/fi";
-
-// import { authOptions } from "../api/auth/[...nextauth]/route";
-// import { getServerSession } from "next-auth";
-// import { redirect } from "next/navigation";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const invoices = [
   {
@@ -89,19 +85,16 @@ const alerts = [
 export default function Dashboard() {
   const [totalExpense, setTotalExpense] = useState(0);
 
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     location.replace("/");
-  //   }
-  // }, [status, session]);
+  useEffect(() => {
+    console.log(session,status, "session")
+    if (status === "unauthenticated") {
+      location.replace("/");
+    }
+  }, [status, session]);
 
-  //   if (status === 'loading') {
-  //   return <div className="p-6 text-lg">Loading...</div>;
-  // }
-
-
+  
   useEffect(() => {
     const fetchTotalExpenses = async () => {
       try {
@@ -197,13 +190,12 @@ export default function Dashboard() {
                     <td className="text-right">
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                        ${
-                          invoice.status === "Delivered"
+                        ${invoice.status === "Delivered"
                             ? "bg-green-100 text-green-800"
                             : invoice.status === "In Progress"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
                       >
                         {invoice.status}
                       </span>
