@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnection from '@/config/dbConnection';
 import Checkout from '@/models/checkoutModel';
-import { connectDB } from '@/lib/db';
+// import { connectDB } from '@/lib/db';
 
 export async function POST(req) {
   await dbConnection();
