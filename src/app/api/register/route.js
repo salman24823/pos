@@ -1,33 +1,35 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 import dbConnection from "@/config/dbConnection";
 import User from "@/models/userModel";
-import bcrypt from "bcrypt";
 
-// POST endpoint for registration
+// POST /api/register
 export async function POST(req) {
-  console.log("Received a POST request to /api/register");
-
-  await dbConnection();
-
   try {
+    console.log("[POST] /api/register");
+
+    await dbConnection();
+
     const { name, email, password } = await req.json();
 
     if (!name || !email || !password) {
-      return NextResponse.json({ message: "Missing fields" }, { status: 400 });
+      return NextResponse.json(
+        { message: "All fields are required" },
+        { status: 400 }
+      );
     }
 
-    // Check for existing user
     const existingUser = await User.findOne({ email });
+
     if (existingUser) {
       return NextResponse.json(
-        { message: "User already exists" },
+        { message: "User already exists with this email" },
         { status: 409 }
       );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save user
     const newUser = await User.create({
       name,
       email,
@@ -35,23 +37,38 @@ export async function POST(req) {
     });
 
     return NextResponse.json(
-      { message: "User registered successfully", user: newUser },
+      {
+        message: "User registered successfully",
+        user: {
+          _id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+        },
+      },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error registering user:", error.message);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    console.error("Registration error:", error.message);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
+// GET /api/register
 export async function GET() {
   try {
+    console.log("[GET] /api/register");
+
     await dbConnection();
-    const employees = await User.find();
-    return NextResponse.json(employees);
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
+
+    return NextResponse.json(users, { status: 200 });
   } catch (error) {
+    console.error("Fetching users failed:", error.message);
     return NextResponse.json(
-      { message: "Failed to fetch employees" },
+      { message: "Failed to fetch users" },
       { status: 500 }
     );
   }
