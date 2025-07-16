@@ -1,9 +1,14 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import {
-  FiUser, FiCalendar, FiClock, FiMapPin,
-  FiLoader, FiCheckCircle,
+  FiUser,
+  FiCalendar,
+  FiClock,
+  FiMapPin,
+  FiLoader,
+  FiCheckCircle,
 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
@@ -32,9 +37,12 @@ export default function CheckInPage() {
     try {
       const res = await fetch(`/api/checkin?email=${session?.user?.email}`);
       const data = await res.json();
-      setAttendanceRecords(data);
+
+      // ✅ Ensure it's always an array
+      setAttendanceRecords(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching attendance records:', error);
+      setAttendanceRecords([]); // Fallback
     }
   };
 
@@ -109,16 +117,20 @@ export default function CheckInPage() {
       }
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          resolve(`Lat: ${position.coords.latitude.toFixed(4)}, Lng: ${position.coords.longitude.toFixed(4)}`);
+          resolve(
+            `Lat: ${position.coords.latitude.toFixed(
+              4
+            )}, Lng: ${position.coords.longitude.toFixed(4)}`
+          );
         },
-        (error) => {
+        () => {
           reject(new Error('Location access denied'));
         }
       );
     });
   };
 
-  if (status === "loading") return <div className="p-6">Loading...</div>;
+  if (status === 'loading') return <div className="p-6">Loading...</div>;
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
@@ -158,7 +170,10 @@ export default function CheckInPage() {
                   <FiClock className="mr-2" /> Time
                 </label>
                 <div className="w-full px-4 py-2 border text-gray-400 rounded-lg bg-gray-50">
-                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {new Date().toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
                 </div>
               </div>
             </div>
@@ -201,7 +216,9 @@ export default function CheckInPage() {
         <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
           <h2 className="text-xl font-bold mb-4 text-gray-700">My Attendance Records</h2>
           {attendanceRecords.length === 0 ? (
-            <div className="text-center py-8 text-gray-700">No attendance records found</div>
+            <div className="text-center py-8 text-gray-700">
+              No attendance records found
+            </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
